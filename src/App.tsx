@@ -1,10 +1,48 @@
 import { useState, useEffect, useCallback } from 'react'
 
+interface Language {
+  code: string
+  name: string
+  buttonText: {
+    start: string
+    stop: string
+  }
+  placeholderText: string
+  clearText: string
+  title: string
+}
+
+const languages: Record<string, Language> = {
+  'en-US': {
+    code: 'en-US',
+    name: 'English',
+    buttonText: {
+      start: 'Start Listening',
+      stop: 'Stop Listening'
+    },
+    placeholderText: 'Recognized text will appear here...',
+    clearText: 'Clear Text',
+    title: 'Speech to Text'
+  },
+  'fi-FI': {
+    code: 'fi-FI',
+    name: 'Suomi',
+    buttonText: {
+      start: 'Aloita Kuuntelu',
+      stop: 'Lopeta Kuuntelu'
+    },
+    placeholderText: 'Tunnistettu teksti näkyy tässä...',
+    clearText: 'Tyhjennä',
+    title: 'Puheesta Tekstiksi'
+  }
+}
+
 function App() {
   const [isListening, setIsListening] = useState(false)
   const [text, setText] = useState('')
   const [error, setError] = useState<string | null>(null)
-
+  const [currentLang, setCurrentLang] = useState<string>('en-US')
+  
   // Initialize speech recognition
   const recognition = useCallback(() => {
     if (!('webkitSpeechRecognition' in window)) {
@@ -13,8 +51,9 @@ function App() {
     const recognition = new (window as any).webkitSpeechRecognition()
     recognition.continuous = true
     recognition.interimResults = true
+    recognition.lang = currentLang
     return recognition
-  }, [])
+  }, [currentLang])
 
   useEffect(() => {
     let recognitionInstance: any
@@ -54,13 +93,31 @@ function App() {
     if (error) setError(null)
   }
 
+  const toggleLanguage = () => {
+    // Stop listening when switching languages
+    if (isListening) {
+      setIsListening(false)
+    }
+    setCurrentLang(currentLang === 'en-US' ? 'fi-FI' : 'en-US')
+  }
+
+  const lang = languages[currentLang]
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Speech to Text
-          </h1>
+          <div className="flex justify-between items-center mb-4">
+            <h1 className="text-3xl font-bold text-gray-800">
+              {lang.title}
+            </h1>
+            <button
+              onClick={toggleLanguage}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+            >
+              {currentLang === 'en-US' ? 'Suomeksi' : 'In English'}
+            </button>
+          </div>
           
           <div className="space-y-4">
             <button
@@ -71,7 +128,7 @@ function App() {
                   : 'bg-blue-500 hover:bg-blue-600'
               }`}
             >
-              {isListening ? 'Stop Listening' : 'Start Listening'}
+              {isListening ? lang.buttonText.stop : lang.buttonText.start}
             </button>
 
             {error && (
@@ -82,7 +139,7 @@ function App() {
 
             <div className="border rounded-lg p-4 min-h-[200px] bg-gray-50">
               <p className="text-gray-800 whitespace-pre-wrap">
-                {text || 'Recognized text will appear here...'}
+                {text || lang.placeholderText}
               </p>
             </div>
 
@@ -91,7 +148,7 @@ function App() {
                 onClick={() => setText('')}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors"
               >
-                Clear Text
+                {lang.clearText}
               </button>
             </div>
           </div>
