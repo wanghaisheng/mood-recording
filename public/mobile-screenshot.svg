@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="750" height="1334" viewBox="0 0 750 1334" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <rect width="750" height="1334" fill="#F3F4F6"/>
+    <rect x="20" y="100" width="710" height="1134" fill="white" rx="8"/>
+    <rect x="40" y="140" width="670" height="80" fill="#1F2937"/>
+    <text x="70" y="190" font-family="Arial" font-size="36" fill="white">Speech to Text</text>
+    <rect x="40" y="250" width="670" height="60" fill="#3B82F6" rx="8"/>
+    <text x="375" y="290" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Start Listening</text>
+    <rect x="40" y="340" width="670" height="300" fill="#F9FAFB" rx="8"/>
+    <text x="70" y="390" font-family="Arial" font-size="24" fill="#6B7280">Recognized text will appear here...</text>
+</svg>
