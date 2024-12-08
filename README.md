@@ -42,3 +42,6 @@ This app uses the Web Speech API, which is currently supported in:
 - Chrome (desktop & mobile)
 - Edge (desktop & mobile)
 - Safari (iOS)
+
+## Test Update
+- Added this section on December 8, 2024 to test the build and deployment workflow
