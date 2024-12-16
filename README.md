@@ -1,3 +1,10 @@
+add support  whisper.cpp from wasm
+
+
+
+
+
+
 # PWA004 - Speech to Text
 
 A Progressive Web App that converts speech to text using the Web Speech API. 
