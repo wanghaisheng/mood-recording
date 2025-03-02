@@ -1,6 +1,14 @@
 add support  whisper.cpp from wasm
 
 
+add  deepseek api call 
+
+
+turn text to 感恩日记
+
+turn text to 天气形容心情
+
+
 
 
 
